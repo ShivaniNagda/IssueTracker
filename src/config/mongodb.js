@@ -13,28 +13,21 @@ if (!url) {
 
 let client;
 
-export const connectToMongoDB = async () => {
-  try {
-    // Use proper options for MongoDB client
-    client = await MongoClient.connect(url);
-    console.log("MongoDB is connected");
-  } catch (error) {
-    console.error("Failed to connect to MongoDB:", error);
-    process.exit(1); // Optional: Exit process if the connection fails
-  }
+export const connectToMongoDB =() => {
+  MongoClient.connect(url)
+    .then((clientInstance) => {
+      client = clientInstance;
+      console.log("Mongodb is connected");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const getDB = () => {
   if (!client) {
    console.log("MongoDB client is not connected yet.");
-  }else{
+  }
   return client.db(); 
-  }// Return the connected database
 };
 
-export const closeMongoDB = async () => {
-  if (client) {
-    await client.close();
-    console.log("MongoDB connection closed");
-  }
-};
