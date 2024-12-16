@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config(); 
 
 // Ensure the DB_URL is being read correctly from the .env file
-const url = process.env.DB_URL || "mongodb://localhost:27017/trackerdb";
+const url = process.env.DB_URL || URL ;
 if (!url) {
   console.log("DB_URL is not defined in the .env file.");
 }
@@ -16,10 +16,7 @@ let client;
 export const connectToMongoDB = async () => {
   try {
     // Use proper options for MongoDB client
-    client = await MongoClient.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    client = await MongoClient.connect(url);
     console.log("MongoDB is connected");
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);
@@ -29,9 +26,10 @@ export const connectToMongoDB = async () => {
 
 export const getDB = () => {
   if (!client) {
-    throw new Error("MongoDB client is not connected yet.");
-  }
-  return client.db(); // Return the connected database
+   console.log("MongoDB client is not connected yet.");
+  }else{
+  return client.db(); 
+  }// Return the connected database
 };
 
 export const closeMongoDB = async () => {
