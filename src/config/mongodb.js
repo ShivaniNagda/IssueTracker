@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config(); 
 
 // Ensure the DB_URL is being read correctly from the .env file
-const url = process.env.DB_URL || URL ;
+const url = process.env.DB_URL || process.env.URL ;
 if (!url) {
   console.log("DB_URL is not defined in the .env file.");
 }
